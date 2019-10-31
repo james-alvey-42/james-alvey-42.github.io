@@ -1,7 +1,3 @@
-<head>
-	<link rel="shortcut icon" type="image/x-icon" href="favicon-96x96.png">
-</head>
-
 ---
 layout: default
 ---
