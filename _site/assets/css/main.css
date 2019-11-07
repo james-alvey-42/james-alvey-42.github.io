@@ -6,6 +6,19 @@
  * 2. Prevent adjustments of font size after orientation changes in
  *    IE on Windows Phone and in iOS.
  */
+
+:root {
+  --sidebar-color: #2f4454;
+  --post-color: #2f4454;
+  --about-color: #ffffff;
+  --main-color: #2f4454;
+  --icon-color: #da7b93;
+  --author-name: #da7b93;
+  --post-title-color: #da7b93;
+  --post-hover-color: #e27d60;
+  --main-font-color: #ffffff;
+}
+
 html {
   line-height: 1.15;
   /* 1 */
@@ -774,8 +787,8 @@ html {
 
 body {
   font-family: 'Lato', sans-serif;
-  color: #515151;
-  background-color: #fbfbfb;
+  color: var(--main-font-color);
+  background-color: var(--main-color);
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -922,7 +935,7 @@ table tfoot td {
   -webkit-flex-direction: column;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: justify;
+  -webkit-box-pack: center;
   -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -930,10 +943,10 @@ table tfoot td {
   top: 0;
   left: 0;
   bottom: 0;
-  width: 240px;
+  width: 300px;
   height: 100%;
   padding: 20px 10px;
-  background-color: #ffffff;
+  background-color: var(--sidebar-color);
 }
 
 .about {
@@ -973,9 +986,9 @@ table tfoot td {
   margin: 0 0 10px;
   position: relative;
   padding-bottom: 15px;
-  font-size: 16px;
-  text-transform: uppercase;
-  color: #333030;
+  font-size: 32px;
+  text-transform: lowercase;
+  color: var(--author-name);
   font-weight: 700;
 }
 
@@ -998,11 +1011,13 @@ table tfoot td {
 .about p {
   font-size: 16px;
   margin: 0 0 10px;
+  align: justify;
 }
 
 .content-box {
   padding: 20px;
-  padding-left: 260px;
+  padding-left: 320px;
+  background-color: var(--main-color);
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1078,7 +1093,7 @@ table tfoot td {
 }
 
 .contact ul li a {
-  color: #515151;
+  color: var(--icon-color);
   display: block;
   padding: 5px;
   font-size: 18px;
@@ -1095,7 +1110,7 @@ table tfoot td {
 }
 
 footer .copyright {
-  font-size: 14px;
+  font-size: 10px;
   text-align: center;
   margin: 0;
 }
@@ -1104,6 +1119,7 @@ footer .copyright {
   width: 100%;
   max-width: 100%;
   margin-bottom: 1.5rem;
+  background-color: var(--post-color);
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1128,12 +1144,17 @@ footer .copyright {
           box-shadow: 0 1px 1px 0 rgba(31, 35, 46, 0.15);
 }
 
+.about-description {
+  color: var(--about-color);
+}
+
 .post:hover {
   -webkit-transform: translate(0px, -2px);
       -ms-transform: translate(0px, -2px);
           transform: translate(0px, -2px);
   -webkit-box-shadow: 0 15px 45px -10px rgba(10, 16, 34, 0.2);
           box-shadow: 0 15px 45px -10px rgba(10, 16, 34, 0.2);
+  background-color: var(--post-hover-color);
 }
 
 .post .post-thumbnail {
@@ -1148,6 +1169,8 @@ footer .copyright {
 .post .post-content {
   padding: 1rem;
   width: 70%;
+  opacity: 0.7;
+  background-color: var(--post-color);
 }
 
 .post .post-content .post-date,
@@ -1158,13 +1181,13 @@ footer .copyright {
 .post .post-content .post-title {
   margin: 0 0 10px;
   font-size: 30px;
-  font-weight: 400;
+  font-weight: 800;
 }
 
 .post .post-content .post-title a {
   font-family: 'PT Serif', serif;
   text-decoration: none;
-  color: #263959;
+  color: var(--post-title-color);
 }
 
 .post .post-content p {
@@ -1408,7 +1431,7 @@ a.newer-posts:hover {
             justify-content: space-between;
     width: 100%;
     padding: 10px;
-    background-color: #ffffff;
+    background-color: var(--sidebar-color);
     -webkit-box-shadow: 0 1px 1px 0 rgba(31, 35, 46, 0.15);
             box-shadow: 0 1px 1px 0 rgba(31, 35, 46, 0.15);
   }
