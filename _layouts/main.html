@@ -3,7 +3,7 @@ layout: default
 ---
 
 <aside class="sidebar">
-  <header>
+  <header style="overflow-y: scroll;">
     <div class="about">
       <div class="cover-author-image">
         <a href="{{site.baseurl}}/"><img src="{{site.baseurl}}/assets/img/{% if site.author-img %}{{site.author-img}}{% endif %}" alt="{{site.author}}"></a>
@@ -11,6 +11,33 @@ layout: default
       <div class="author-name">{{site.author}}</div>
       <p class="about-description" align="justify">{{site.about-author}}</p>
     </div>
+    <section class="links">
+      <h3 class="links-title">Links</h3>
+      <ul>
+          <li>Inspire-HEP Profile [Publications]</br>
+            <a href="http://inspirehep.net/author/profile/J.B.G.Alvey.1" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i>inspirehep.net</a>
+          </li></br>
+          <li>Career [CV]</br>
+            <a href="{{site.baseurl}}/assets/pdf/cv.pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>PDF</a>
+            <a href="http://github.com/{{site.social-github}}/CV" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+          </li></br>
+      </ul>
+    </section>
+    <p></p>
+    <section class="links">
+      <h3 class="links-title">Projects</h3>
+      <ul>
+          <li>DarkBBN</br>
+            <a href="https://arxiv.org/pdf/1910.10730.pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>1910.10730</a>
+            <a href="https://arxiv.org/pdf/1910.01649.pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>1910.01649</a>
+            <a href="http://github.com/{{site.social-github}}/DarkBBN" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+          </li></br>
+          <li>Inelastic Cosmic Rays</br>
+            <a href="https://arxiv.org/pdf/1905.05776.pdf" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>1905.05776</a>
+            <a href="http://github.com/{{site.social-github}}/BoostedDM" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+          </li></br>
+      </ul>
+    </section>
   </header> <!-- End Header -->
   <footer>
     <section class="contact">

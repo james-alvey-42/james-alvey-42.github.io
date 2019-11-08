@@ -6,17 +6,50 @@
  * 2. Prevent adjustments of font size after orientation changes in
  *    IE on Windows Phone and in iOS.
  */
+/**
+:root {
+  --denim: #1a2930;
+  --marigold: #f7ce3e;
+  --steel: #0a1612;
+  --screen: #c5c1c0;
+  --sidebar-color: var(--denim);
+  --post-color: var(--denim);
+  --about-color: var(--screen);
+  --main-color: var(--denim);
+  --main-color-1: var(--denim);
+  --main-color-2: var(--steel);
+  --icon-color: var(--marigold);
+  --author-name: var(--marigold);
+  --post-title-color: var(--marigold);
+  --post-hover-color: var(--steel);
+  --main-font-color: var(--screen);
+  --code-color: var(--screen);
+  --link-color: var(--marigold);
+  --icon-hover-color: var(--screen);
+}
+**/
 
 :root {
-  --sidebar-color: #2f4454;
-  --post-color: #2f4454;
+  --stormy: #494e6b;
+  --evening: #192231;
+  --sunset: #ff6a5c;
+  --cloud: #98878f;
+  --sidebar-color: var(--evening);
+  --post-color: var(--evening);
   --about-color: #ffffff;
-  --main-color: #2f4454;
-  --icon-color: #da7b93;
-  --author-name: #da7b93;
-  --post-title-color: #da7b93;
-  --post-hover-color: #e27d60;
+  --main-color: var(--evening);
+  --icon-color: var(--sunset);
+  --author-name: var(--sunset);
+  --post-title-color: var(--sunset);
+  --post-hover-color: var(--evening);
   --main-font-color: #ffffff;
+  --code-color: var(--evening);
+  --link-color: var(--sunset);
+  --icon-hover-color: var(--cloud);
+  --selection-font-color: var(--sunset);
+  --selection-background-color: var(--stormy);
+  --sidebar-links: var(--sunset);
+  --sidebar-icons: var(--stormy);
 }
 
 html {
@@ -26,6 +59,10 @@ html {
   /* 2 */
   -webkit-text-size-adjust: 100%;
   /* 2 */
+}
+
+a {
+  text-decoration: none;
 }
 
 /* Sections
@@ -100,6 +137,7 @@ pre {
   font-family: monospace, monospace;
   /* 1 */
   font-size: 1em;
+  background-color: var(--code-color);
   /* 2 */
 }
 
@@ -111,6 +149,7 @@ pre {
  */
 a {
   background-color: transparent;
+  color: var(--link-color);
   /* 1 */
   -webkit-text-decoration-skip: objects;
   /* 2 */
@@ -814,11 +853,11 @@ img + em {
 }
 
 blockquote {
-  border-left: 5px solid #000;
+  border-left: 5px solid var(--icon-color);
   padding-left: 1.1rem;
   margin-left: 1rem;
   font-style: italic;
-  color: #ada8a8;
+  color: var(--main-font-color);
 }
 
 pre {
@@ -906,13 +945,13 @@ table tfoot td {
 }
 
 ::-moz-selection {
-  background: rgba(38, 57, 89, 0.8);
-  color: #ffffff;
+  background: var(--selection-background-color);
+  color: var(--selection-font-color);
 }
 
 ::selection {
-  background: rgba(38, 57, 89, 0.8);
-  color: #ffffff;
+  background: var(--selection-background-color);
+  color: var(--selection-font-color);
 }
 
 .clearfix::before, .clearfix::after {
@@ -1038,7 +1077,7 @@ table tfoot td {
 
 .contact .contact-title {
   position: relative;
-  color: #333030;
+  color: var(--main-font-color);
   font-weight: 400;
   font-size: 12px;
   margin: 0 0 5px;
@@ -1094,7 +1133,7 @@ table tfoot td {
 
 .contact ul li a {
   color: var(--icon-color);
-  display: block;
+  display: inline-block;
   padding: 5px;
   font-size: 18px;
   -webkit-transition: all 350ms cubic-bezier(0.13, 0.43, 0.54, 1.82);
@@ -1103,10 +1142,95 @@ table tfoot td {
 }
 
 .contact ul li a:hover {
-  color: #333030;
+  color: var(--icon-hover-color);
   -webkit-transform: scale(1.2);
       -ms-transform: scale(1.2);
           transform: scale(1.2);
+}
+
+.links .links-title {
+  position: relative;
+  color: var(--main-font-color);
+  font-weight: 400;
+  font-size: 12px;
+  margin: 0 0 5px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.links .links-title::before {
+  content: "";
+  display: block;
+  height: 2px;
+  width: -webkit-calc(50% - 48px);
+  width: calc(50% - 48px);
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  background-color: #515151;
+}
+
+.links .links-title::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: -webkit-calc(50% - 48px);
+  width: calc(50% - 48px);
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  position: absolute;
+  top: 50%;
+  right: 0;
+  background-color: #515151;
+}
+
+.links ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: square;
+  text-align: left;
+}
+
+.links ul li {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.links ul li:first-child {
+  margin-left: 20px;
+}
+
+.links ul li a {
+  color: var(--sidebar-icons);
+  display: inline-block;
+  padding: 0px;
+  font-size: 16px;
+  -webkit-transition: all 350ms cubic-bezier(0.13, 0.43, 0.54, 1.82);
+  -o-transition: all 350ms cubic-bezier(0.13, 0.43, 0.54, 1.82);
+  transition: all 350ms cubic-bezier(0.13, 0.43, 0.54, 1.82);
+}
+
+.links ul li a:hover {
+  color: var(--sidebar-links);
+  -webkit-transform: scale(1.02);
+      -ms-transform: scale(1.02);
+          transform: scale(1.02);
+}
+
+.links i:hover {
+  color: var(--sidebar-links);
+  -webkit-transform: scale(1.02);
+      -ms-transform: scale(1.02);
+          transform: scale(1.02);
+}
+
+.links i {
+  color: var(--sidebar-icons);
+  padding: 5px;
 }
 
 footer .copyright {
@@ -1149,9 +1273,9 @@ footer .copyright {
 }
 
 .post:hover {
-  -webkit-transform: translate(0px, -2px);
-      -ms-transform: translate(0px, -2px);
-          transform: translate(0px, -2px);
+  -webkit-transform: scale3d(0.99, 0.99, 1);
+      -ms-transform: scale3d(0.99, 0.99, 1);
+          transform: scale3d(0.99, 0.99, 1);
   -webkit-box-shadow: 0 15px 45px -10px rgba(10, 16, 34, 0.2);
           box-shadow: 0 15px 45px -10px rgba(10, 16, 34, 0.2);
   background-color: var(--post-hover-color);
@@ -1219,7 +1343,8 @@ a.newer-posts:hover {
 
 /* - - - - - - - - - - Post Page Styles - - - - - - - - - - */
 .wrap-content {
-  padding: 20px;
+  padding: 40px;
+  background-color: var(--main-color);
 }
 
 .header-page {
@@ -1234,7 +1359,7 @@ a.newer-posts:hover {
 }
 
 .header-page .page-date {
-  color: #a0a0a0;
+  color: var(--main-font-color);
   font-weight: 300;
   font-size: 12px;
   text-transform: uppercase;
