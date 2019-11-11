@@ -1,0 +1,26 @@
+I"*<p>The synthesis of light elements in the early universe is a complex process, and provides much insight into the thermodynamic state of each particle species that is present. The agreement between precise measurements of the light element abundances such as Hydrogen, Helium and Lithium provides strong evidence for a Hot Big Bang. Nonetheless, it is known that new physics is required both in the Standard models of particle physics and cosmology. The precision of these light element abundances can place tight constraints on the type of new physics that can be at play. To derive these constraints, a solid understanding of the physics underlying BBN is required.</p>
+
+<h2 id="to-do-list">To Do List:</h2>
+
+<ul>
+  <li>
+    <p>Understand whether we need to change <code class="highlighter-rouge">NtemperaturePoints</code> (pg. 6)</p>
+  </li>
+  <li>Discussion regarding recomputing weak rates (is 10 minutes prohibitive?) (pg. 7)
+    <ol>
+      <li>Can we parallelise easily in Mathematica? <a href="https://reference.wolfram.com/language/ref/Parallelize.html">see Parallelize</a></li>
+      <li>Do we need to run on a cluster?</li>
+      <li><strong>Save new weak rates to different file so can always run SM</strong></li>
+    </ol>
+  </li>
+  <li>
+    <p>Are we going to neglect the chemical potential of neutrinos?</p>
+  </li>
+  <li>
+    <p>Make sure that the temperature lists and ranges are the same (pg. 10)</p>
+  </li>
+  <li>Check <script type="math/tex">\tau_{\mathrm{neutron}}</script> value from PDG vs PRIMAT (pg. 12)</li>
+</ul>
+
+<p><a href="/">link to home</a></p>
+:ET
