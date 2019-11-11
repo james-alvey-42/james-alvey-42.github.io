@@ -1,0 +1,83 @@
+I"�<h2 id="style-files">Style Files</h2>
+
+<p>Many of the visual effects that improve the quality of plots in <code class="highlighter-rouge">matplotlib</code> can be achieved via a user-defined style. Whilst there are a number of inbuilt styles that can be used via the command,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="n">style</span><span class="p">)</span></code></pre></figure>
+
+<p>these often lack the details required for scientific publications such as the use of TeX commands, and label sizing. The alternative is to define your own style file. The style file <code class="highlighter-rouge">ja.mplstyle</code> is the current styling I use for my plots, you can download it <a href="/assets/files/ja.mplstyle" target="_blank"><i class="fa fa-file-text-o"></i> here</a>. It saves many iterations of the command;</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">plt</span><span class="o">.</span><span class="n">rcparams</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="o">...</span></code></pre></figure>
+
+<p>at the start of plotting scripts. To create your own style there are three steps;</p>
+
+<ol>
+  <li>
+    <p>Create the style file from the template below</p>
+  </li>
+  <li>
+    <p>Work out where on your system to store the file so that <code class="highlighter-rouge">matplotlib</code> can find it</p>
+  </li>
+  <li>
+    <p>Use the style in your code</p>
+  </li>
+</ol>
+
+<h2 id="creating-the-file">Creating the File</h2>
+
+<p>I’ve included my style file, <code class="highlighter-rouge">ja.mplstyle</code>, above as an example. This includes many commands that are commented out with a # symbol, but can be set as desired. As a note, of course the file can be named anything you want, it will only change how it is imported later.</p>
+
+<hr />
+
+<p>Where to store the file
+———————–</p>
+
+<p>This is a more complicated question and took some time to figure out. In order for <code class="highlighter-rouge">matplotlib</code> to find the file and it be included as a possible style, it must be placed in the correct <code class="highlighter-rouge">stylelib</code> folder. Below there are two options based on my experience with CentOS and OSX, however you may have to be a bit more patient and try some more creative options.</p>
+
+<ul>
+  <li><strong>OSX:</strong> Place the file in a directory with path <code class="highlighter-rouge">~/.matplotlib/stylelib/ja.mplstyle</code></li>
+  <li><strong>CentOS:</strong> Put the file in a directory with path <code class="highlighter-rouge">~/.config/matplotlib/stylelib/ja.mplstyle</code></li>
+</ul>
+
+<p>To check if you have placed it in the right folder, the following code can be used. If successful, the name of your style should show up in the list along with the built in styles such as <code class="highlighter-rouge">ggplot</code> etc.</p>
+
+<p>.. code-block:: python</p>
+
+<p>import matplotlib.pyplot as plt
+   print(plt.style.available)</p>
+
+<p>As a slight attempt to troubleshoot this, there is already a directory in the <code class="highlighter-rouge">site-packages</code> folder where <code class="highlighter-rouge">matplotlib</code> is contained which is entitled <code class="highlighter-rouge">stylelib</code>. I found that putting the style file in this directory did not work however as when <code class="highlighter-rouge">matplotlib</code> was imported, my style was not an option.</p>
+
+<hr />
+
+<p>Using the style in your code
+—————————-</p>
+
+<p>Once the style is installed succesfully in the correct directory, using it is simple. At the top of your file, simply include the following, replacing <code class="highlighter-rouge">ja</code> with the name of your style.</p>
+
+<p>.. code-block:: python</p>
+
+<p>import matplotlib.pyplot as plt
+   plt.style.use(‘ja’)</p>
+
+<hr />
+
+<p>Default Styling
+—————</p>
+
+<p>As a final, slightly more complicated point, we can also make this the default style so that the second line above is not needed. To do this, add the following line to the file <code class="highlighter-rouge">/anaconda3/lib/site-packages/matplotlib/pyplot.py</code>,</p>
+
+<p>.. code-block:: python</p>
+
+<p>matplotlib.style.use(‘ja’)</p>
+
+<p>again, replacing the name as necessary.</p>
+
+<hr />
+
+<p>The Style File
+————–</p>
+
+<p>.. literalinclude::  ../PythonHelp/ja.mplstyle</p>
+
+:ET
