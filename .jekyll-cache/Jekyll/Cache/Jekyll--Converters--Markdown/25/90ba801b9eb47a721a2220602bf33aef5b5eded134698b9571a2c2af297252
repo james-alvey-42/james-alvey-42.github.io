@@ -1,0 +1,44 @@
+I"E<p>Monte Carlo Markov Chains (MCMC) have many applications across physics and statistics in the estimation of parameters and uncertainties given data in a Bayesian framework. The underlying use of the Markov Chain, however, is to solve the more fundamental issue of <em>sampling</em>.</p>
+
+<h2 id="the-sampling-problem">The Sampling Problem</h2>
+
+<p>We can state the sampling problem as follows;</p>
+
+<blockquote>
+  <p>Let <script type="math/tex">\mathcal{D}</script> be a distribution over a finite set <script type="math/tex">X</script>. Further, we assume that we have access to <script type="math/tex">p(x)</script> for some <script type="math/tex">x in X</script> which outputs the probabiliity of drawing <script type="math/tex">x</script> given <script type="math/tex">\mathcal{D}</script>. The sampling problem is to design an algorithm <script type="math/tex">\mathcal{A}</script> which outputs an element of <script type="math/tex">x</script> approximately with probability <script type="math/tex">p(x)</script>.</p>
+</blockquote>
+
+<p>The reason this is a problem is the following: suppose you generate a large number of choices <script type="math/tex">\{x_0, x_1, x_2, \cdots\}</script> from the underlying set according to some distribtuion that is <em>not</em> <script type="math/tex">p(x)</script>. As it stands, this is certainly not a sample that is close to being representative of the underlying distribution. To generate a genuine sample from this selection, we have to apply some criterion to each point. Note that we have access to <script type="math/tex">\{p(x_0), p(x_1), \cdots\}</script>, so this criterion might take the form of the following:</p>
+
+<ol>
+  <li>Simulate the list <script type="math/tex">\{x_0, x_1, \cdots\}</script></li>
+  <li>For each data point <script type="math/tex">x_k</script>, compute <script type="math/tex">p(x_k)</script></li>
+  <li>Generate a random number <script type="math/tex">p \sim U[0, 1]</script></li>
+  <li>If <script type="math/tex">% <![CDATA[
+p < p(x_k) %]]></script>, add the point <script type="math/tex">x_k</script> to the sample, else reject the point</li>
+</ol>
+
+<p>The probelm with this is that for a large set <script type="math/tex">X</script>, there might only be a small region where the probability is non-neglible, so the vast majority of the points in the original list will be rejected. The above approach will generate a sample that reflects the underlying distribution, the problem is that it will be very slow. To show that this really does work, consider the following example.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">N</span>         <span class="o">=</span> <span class="mf">1e6</span>
+<span class="n">x</span>         <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">p</span>         <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">p_test</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_test</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">)</span>
+<span class="n">sample</span>    <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">criterion</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">r'$x$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">r'$p(x)$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">sample</span><span class="p">],</span> 
+		<span class="n">bins</span><span class="o">=</span><span class="mf">1e2</span><span class="p">,</span> 
+		<span class="n">density</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+		<span class="n">histtype</span><span class="o">=</span><span class="s">'step'</span><span class="p">,)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></figure>
+
+<p>This produces the graphical output below. Testing the code, we find that approximately 90% of the original sample is rejected, illustrating the issue with the method to generate samples of a given size.</p>
+:ET

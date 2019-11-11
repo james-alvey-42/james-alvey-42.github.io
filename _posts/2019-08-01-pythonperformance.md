@@ -218,3 +218,5 @@ for x, y in zip([0, 1, 2], [4, 5, 6]):
 # Parallelised:
 result = Parallel(n_jobs=-1)(delayed(add)(x, y) for (x, y) in zip([0, 1, 2], [4, 5, 6]))
 {% endhighlight %}
+
+<a href="{{site.baseurl}}/"><i class="fa fa-home" aria-hidden="true"></i> Homepage</a>

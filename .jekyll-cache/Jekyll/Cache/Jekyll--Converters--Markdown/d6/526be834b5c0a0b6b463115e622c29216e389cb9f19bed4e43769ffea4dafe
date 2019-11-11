@@ -1,0 +1,88 @@
+I"ô*<p>Monte Carlo Markov Chains (MCMC) have many applications across physics and statistics in the estimation of parameters and uncertainties given data in a Bayesian framework. The underlying use of the Markov Chain, however, is to solve the more fundamental issue of <em>sampling</em>.</p>
+
+<h2 id="the-sampling-problem">The Sampling Problem</h2>
+
+<p>We can state the sampling problem as follows;</p>
+
+<blockquote>
+  <p>Let <script type="math/tex">\mathcal{D}</script> be a distribution over a finite set <script type="math/tex">X</script>. Further, we assume that we have access to <script type="math/tex">p(x)</script> for some <script type="math/tex">x in X</script> which outputs the probabiliity of drawing <script type="math/tex">x</script> given <script type="math/tex">\mathcal{D}</script>. The sampling problem is to design an algorithm <script type="math/tex">\mathcal{A}</script> which outputs an element of <script type="math/tex">x</script> approximately with probability <script type="math/tex">p(x)</script>.</p>
+</blockquote>
+
+<p>The reason this is a problem is the following: suppose you generate a large number of choices <script type="math/tex">\{x_0, x_1, x_2, \cdots\}</script> from the underlying set according to some distribtuion that is <em>not</em> <script type="math/tex">p(x)</script>. As it stands, this is certainly not a sample that is close to being representative of the underlying distribution. To generate a genuine sample from this selection, we have to apply some criterion to each point. Note that we have access to <script type="math/tex">\{p(x_0), p(x_1), \cdots\}</script>, so this criterion might take the form of the following:</p>
+
+<ol>
+  <li>Simulate the list <script type="math/tex">\{x_0, x_1, \cdots\}</script></li>
+  <li>For each data point <script type="math/tex">x_k</script>, compute <script type="math/tex">p(x_k)</script></li>
+  <li>Generate a random number <script type="math/tex">p \sim U[0, 1]</script></li>
+  <li>If <script type="math/tex">% <![CDATA[
+p < p(x_k) %]]></script>, add the point <script type="math/tex">x_k</script> to the sample, else reject the point</li>
+</ol>
+
+<p>The probelm with this is that for a large set <script type="math/tex">X</script>, there might only be a small region where the probability is non-neglible, so the vast majority of the points in the original list will be rejected. The above approach will generate a sample that reflects the underlying distribution, the problem is that it will be very slow. To show that this really does work, consider the following example.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">N</span>         <span class="o">=</span> <span class="mf">1e6</span>
+<span class="n">x</span>         <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">p</span>         <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">p_test</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_test</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">)</span>
+<span class="n">sample</span>    <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">criterion</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">r'$x$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">r'$p(x)$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">sample</span><span class="p">],</span> 
+	<span class="n">bins</span><span class="o">=</span><span class="mf">1e2</span><span class="p">,</span> 
+	<span class="n">density</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+	<span class="n">histtype</span><span class="o">=</span><span class="s">'step'</span><span class="p">,)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></figure>
+
+<p>This produces the graphical output below. Testing the code, we find that approximately 90% of the original sample is rejected, illustrating the issue with the method to generate samples of a given size.</p>
+
+<p><img src="/assets/img/easy_sample.png" alt="Easy Sample" /></p>
+
+<blockquote>
+  <p>Using the easy sampling method, the probability criterion is applied to the blue sample, resulting in the correct green sample for a normal distribution with mean 0, and variance 1.*</p>
+</blockquote>
+
+<h2 id="the-solution-markov-chains">The Solution: Markov Chains</h2>
+
+<p>To solve this sampling problem, we turn to the second MC in the title, <em>Markov Chains</em>. We can view a Markoc Chain as a random walk on a graph in that sense that for a given graph of vertices and edges <script type="math/tex">G = (V, E)</script>, we should specify a number <script type="math/tex">p_{uv} \in [0, 1]</script> for each edge <script type="math/tex">e = (u, v) \in E</script>. For this to be a true random walk, the probability should satisfy the condition that for every vertex <script type="math/tex">v \in V</script>, <script type="math/tex">\sum_y{p_{xy}} = 1</script> where the sum is over all outgoing edges. In other words, the outgoing values from the vertex form a probability distribution. To proceed, we need to appeal to the <em>Fundamental Theorem of Markov Chains</em> which states the following:</p>
+
+<h3 id="fundamental-theorem-of-markov-chains">Fundamental Theorem of Markov Chains</h3>
+
+<blockquote>
+  <p>For any irreducible, aperiodic, positive-recurrent Markov Chain there exists a <em>unique stationary distribution</em> <script type="math/tex">\pi_j, j \in \mathbb{Z}</script>. Intuitively this says that the probability you end up on a given vertex is independent of where you start, and that the given distribution is uniquely determined by the Markov Chain.</p>
+</blockquote>
+
+<p>Now, to introduce the stationary distribution, we will represent the transition probabilities between states <script type="math/tex">i</script> and <script type="math/tex">j</script> as entries in a matrix <script type="math/tex">A = (A_{ij})</script>. The stationary distribution <script type="math/tex">\pi</script> then satisfies <script type="math/tex">A \pi = \pi</script> i.e. it is an <em>eigenvector</em> of <script type="math/tex">A</script> with eigenvalue 1. To guarantee the existence of a unique such vector, there are necessarily conditions on the matrix, or equivalently on the Markov Chains, but these will be satisfied by construction in the case at hand.</p>
+
+<h3 id="constructing-a-graph-to-wak-on">Constructing a Graph to Wak On</h3>
+
+<p>We are now in a position to understand the MCMC method;</p>
+
+<blockquote>
+  <p>The MCMC method is as follows: we want to sample over a finite set :math:<code class="highlighter-rouge">X</code> with probability function :math:<code class="highlighter-rouge">p(x)</code>. To do so, we construct a Markov Chain whose stationary distribution is exactly :math:<code class="highlighter-rouge">p</code>. This is equivalent to choosing a graph and a set of transition probabilities. The sample is then generated by performing a random walk on the graph and listing the vertices. In the long term, the time spent at each vertex will be proportional to the stationary distribution.</p>
+</blockquote>
+
+<p>Now we can construct the probability distribution on a given lattice :math:<code class="highlighter-rouge">\{0, 1, \cdots, n\}^d</code>. Then, let :math:<code class="highlighter-rouge">r = 2d</code> and suppose we are at some vertex :math:<code class="highlighter-rouge">i</code>. To choose where to go next we do the following;</p>
+
+<ol>
+  <li>Pick a neighbouring vertex :math:<code class="highlighter-rouge">j</code> with probability :math:<code class="highlighter-rouge">1/r</code>, else stay at :math:<code class="highlighter-rouge">i</code></li>
+  <li>If you pick :math:<code class="highlighter-rouge">j</code> <em>and</em> :math:<code class="highlighter-rouge">p(j) \geq p(i)</code>, go to :math:<code class="highlighter-rouge">j</code> deterministically</li>
+  <li>Otherwise go to :math:<code class="highlighter-rouge">j</code> with probability :math:<code class="highlighter-rouge">p(j)/p(i)</code>.</li>
+</ol>
+
+<p>To prove that this really is stationary, we note that we can write,</p>
+
+<script type="math/tex; mode=display">p_{i, j} = \frac{1}{r} \mathrm{min}\left(1, p(j)/p(i)\right), \quad p_{i, i}=1-\sum_{(i, j) \in E(G) ; j \neq i} p_{i, j}</script>
+
+<p>Then use the fact that if a probability distribution, :math:<code class="highlighter-rouge">\pi(x)</code> is stationary, then :math:<code class="highlighter-rouge">\pi(x)p_{x, y} = \pi(y)p_{y, x}</code> (this is the statement of detailed balance). Summing over the right hand side this gives exactly :math:<code class="highlighter-rouge">\pi(x) = \pi(y)p_{y, x}</code> where we sum over :math:<code class="highlighter-rouge">y</code> implicitly. This is indeed the eigenvalue equation. Doing this with our choice of probability distribution, we can work only with the first expression and note that,</p>
+
+<script type="math/tex; mode=display">p(i)p_{i, j} = p(j)p_{j, i} = \frac{1}{r}\mathrm{min}\left(p(i), p(j)\right)</script>
+
+<p>So, we have found a graph that has a suitable stationary distribution. To generate a sample, we simply randomly choose a starting point (maybe after jumping round the graph a bit) and compute a random walk on the graph according to these probabilities.</p>
+:ET

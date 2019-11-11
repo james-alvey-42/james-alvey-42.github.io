@@ -76,3 +76,5 @@ again, replacing the name as necessary.
 ## Download
 
 Download my default style file here: <a href="{{site.baseurl}}/assets/files/ja.mplstyle" target="_blank"><i class="fa fa-file-text-o"></i> ja.mplstyle</a>
+
+<a href="{{site.baseurl}}/"><i class="fa fa-home" aria-hidden="true"></i> Homepage</a>

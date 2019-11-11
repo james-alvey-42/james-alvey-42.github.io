@@ -1,0 +1,8 @@
+I"=<p>Monte Carlo Markov Chains (MCMC) have many applications across physics and statistics in the estimation of parameters and uncertainties given data in a Bayesian framework. The underlying use of the Markov Chain, however, is to solve the more fundamental issue of <em>sampling</em>.</p>
+
+<blockquote>
+  <p><strong>The Sampling Problem</strong></p>
+</blockquote>
+
+<p>Let :math:<code class="highlighter-rouge">\mathcal{D}</code> be a distribution over a finite set :math:<code class="highlighter-rouge">X</code>. Further, we assume that we have access to :math:<code class="highlighter-rouge">p(x)</code> for some :math:<code class="highlighter-rouge">x </code>in X<code class="highlighter-rouge"> which outputs the probabiliity of drawing :math:</code>x<code class="highlighter-rouge"> given :math:</code>\mathcal{D}<code class="highlighter-rouge">. The sampling problem is to design an algorithm :math:</code>\mathcal{A}<code class="highlighter-rouge"> which outputs an element of :math:</code>x<code class="highlighter-rouge"> approximately with probability :math:</code>p(x)`.</p>
+:ET

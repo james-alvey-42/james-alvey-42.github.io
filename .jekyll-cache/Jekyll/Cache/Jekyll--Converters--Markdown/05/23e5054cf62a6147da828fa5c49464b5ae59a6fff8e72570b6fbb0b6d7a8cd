@@ -1,0 +1,20 @@
+I"¨
+<p>Monte Carlo Markov Chains (MCMC) have many applications across physics and statistics in the estimation of parameters and uncertainties given data in a Bayesian framework. The underlying use of the Markov Chain, however, is to solve the more fundamental issue of <em>sampling</em>.</p>
+
+<h2 id="the-sampling-problem">The Sampling Problem</h2>
+
+<blockquote>
+  <p>Let :math:<code class="highlighter-rouge">\mathcal{D}</code> be a distribution over a finite set :math:<code class="highlighter-rouge">X</code>. Further, we assume that we have access to :math:<code class="highlighter-rouge">p(x)</code> for some :math:<code class="highlighter-rouge">x </code>in X<code class="highlighter-rouge"> which outputs the probabiliity of drawing :math:</code>x<code class="highlighter-rouge"> given :math:</code>\mathcal{D}<code class="highlighter-rouge">. The sampling problem is to design an algorithm :math:</code>\mathcal{A}<code class="highlighter-rouge"> which outputs an element of :math:</code>x<code class="highlighter-rouge"> approximately with probability :math:</code>p(x)`.</p>
+</blockquote>
+
+<p>The reason this is a problem is the following: suppose you generate a large number of choices :math:<code class="highlighter-rouge">\{x_0, x_1, x_2, \cdots\}</code> from the underlying set according to some distribtuion that is <em>not</em> :math:<code class="highlighter-rouge">p(x)</code>. As it stands, this is certainly not a sample that is close to being representative of the underlying distribution. To generate a genuine sample from this selection, we have to apply some criterion to each point. Note that we have access to :math:<code class="highlighter-rouge">\{p(x_0), p(x_1), \cdots\}</code>, so this criterion might take the form of the following:</p>
+
+<ol>
+  <li>Simulate the list :math:<code class="highlighter-rouge">\{x_0, x_1, \cdots\}</code></li>
+  <li>For each data point :math:<code class="highlighter-rouge">x_k</code>, compute :math:<code class="highlighter-rouge">p(x_k)</code></li>
+  <li>Generate a random number :math:<code class="highlighter-rouge">p \sim U[0, 1]</code></li>
+  <li>If :math:<code class="highlighter-rouge">p &lt; p(x_k)</code>, add the point :math:<code class="highlighter-rouge">x_k</code> to the sample, else reject the point</li>
+</ol>
+
+<p>The probelm with this is that for a large set :math:<code class="highlighter-rouge">X</code>, there might only be a small region where the probability is non-neglible, so the vast majority of the points in the original list will be rejected. The above approach will generate a sample that reflects the underlying distribution, the problem is that it will be very slow. To show that this really does work, consider the following example.</p>
+:ET
