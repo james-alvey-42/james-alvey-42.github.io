@@ -935,6 +935,10 @@ table tfoot td {
   font-size: 14px;
 }
 
+.scrollable-element {
+  scrollbar-width: thin;
+}
+
 .wrapper {
   max-width: 1250px;
   position: relative;
@@ -982,7 +986,7 @@ table tfoot td {
   top: 0;
   left: 0;
   bottom: 0;
-  width: 300px;
+  width: 320px;
   height: 100%;
   padding: 20px 10px;
   background-color: var(--sidebar-color);
@@ -994,8 +998,8 @@ table tfoot td {
 }
 
 .about .cover-author-image {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   margin: 0 auto 10px;
   -webkit-border-radius: 100%;
           border-radius: 100%;
@@ -1569,8 +1573,8 @@ a.newer-posts:hover {
     margin: 10px auto auto;
   }
   .about img {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     -webkit-border-radius: 100%;
             border-radius: 100%;
     margin-bottom: 10px;
