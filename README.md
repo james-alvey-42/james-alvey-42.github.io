@@ -37,4 +37,13 @@ The relevant repository is [this one](https://github.com/james-alvey-42/IceCubeN
 
 ### Talks
 
-There is also a repository with the various [talks](https://github.com/james-alvey-42/Talks) I have given on these topics plus some others of general interest.
+There is also a repository with the various [talks](https://github.com/james-alvey-42/Talks) I have given on these topics plus some others of general interest. Quick links to these can be found below.
+
+* [Big Bang Nucleosynthesis - DMUK (PDF)](https://james-alvey-42.github.io/assets/pdf/DMUK.pdf)
+* [The Atmosphere as a Beam Dump - BUSSTEPP (PDF)](https://james-alvey-42.github.io/assets/pdf/beam-dump.pdf)
+
+## Beyond Physics
+
+In addition to this, there is some content related to programming tips and techniques, code examples, and other projects. A non-exhaustive list is given below.
+
+* **Free Speed in Python** - The notebook can be found in [this repository](https://github.com/james-alvey-42/ProgramTools/tree/master/PythonLessons) and the accompanying talk [here](https://james-alvey-42.github.io/assets/pdf/free-speed.pdf). This is part of a series of lectures at King's College London (see [KCL Physics](https://github.com/KCLPhysics/CarpentryOctober2019) for more).
