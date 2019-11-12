@@ -1030,7 +1030,7 @@ table tfoot td {
   position: relative;
   padding-bottom: 15px;
   font-size: 32px;
-  text-transform: lowercase;
+  text-transform: none;
   color: var(--author-name);
   font-weight: 700;
 }
