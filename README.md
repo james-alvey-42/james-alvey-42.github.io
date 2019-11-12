@@ -12,6 +12,10 @@ For my CV, the [PDF can be found here](https://james-alvey-42.github.io/assets/p
 
 A summary of my recent publications can be found on [Inspire-HEP](http://inspirehep.net/search?p=exactauthor%3AJ.B.G.Alvey.1&sf=earliestdate).
 
+### CMBGraph
+
+A current research interest concerns graph neural networks and their application to the Cosmic Microwave Background. More information can be found [here](https://james-alvey-42.github.io/cmbgraph/), while the code is available in [this repository](https://github.com/james-alvey-42/CMBGraph).
+
 ### DarkBBN
 
 <img src="assets/img/bbntitle.jpg" width="400">
