@@ -8,13 +8,13 @@ fig-caption: # Add figcaption (optional)
 tags: [Boosted Dark Matter, Direct Detection, Dark Matter]
 ---
 
-> Direct detection experiments relying on nuclear recoil signatures lose sensitivity to sub-GeV dark matter for typical galactic velocities. This sensitivity is recovered if there exists another source of flux with higher momenta. Such an energetic flux of light dark matter could originate from the decay of mesons produced in inelastic cosmic ray collisions. We compute this novel production mechanism - a cosmic beam dump experiment - and estimate the resulting limits from XENON1T and LZ. We find that the dark matter flux from inelastic cosmic rays colliding with atmospheric nuclei can dominate over the flux from elastic collisions with relic dark matter.
+> There is a common issue with all direct detection experiments in that they lose sensitivity to light dark matter due to small nuclear recoils. We estimated the impact that inelastic collisions of cosmic rays in the atmosphere, producing light dark matter from meson decays, could have on the direct detection parameter space.
 
 This post is based on an article written in May 2019 with colleagues at King's College London and the University of Cambridge. Links to the webpages and PDF documents can be found below. Also included is a link to a presentation given by myself at the recent BUSSTEPP Summer School at the University of Glasgow.
 
 ### Light Dark Matter from Inelastic Cosmic Ray Collisions, *J. Alvey, M. Campos, M. Fairbairn, T. You*
 
-*Summary:* There is a common issue with all direct detection experiments in that they lose sensitivity to light dark matter due to small nuclear recoils. We estimated the impact that inelastic collisions of cosmic rays in the atmosphere, producing light dark matter from meson decays, could have on the direct detection parameter space.
+*Abstract:* Direct detection experiments relying on nuclear recoil signatures lose sensitivity to sub-GeV dark matter for typical galactic velocities. This sensitivity is recovered if there exists another source of flux with higher momenta. Such an energetic flux of light dark matter could originate from the decay of mesons produced in inelastic cosmic ray collisions. We compute this novel production mechanism - a cosmic beam dump experiment - and estimate the resulting limits from XENON1T and LZ. We find that the dark matter flux from inelastic cosmic rays colliding with atmospheric nuclei can dominate over the flux from elastic collisions with relic dark matter. The limits that we obtain for hadrophilic scalar mediator models are competitive with those from MiniBoone for light MeV-scale mediator masses.
 
 * <a href="https://arxiv.org/pdf/1905.05776.pdf" target="blank_"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF</a> 
 
