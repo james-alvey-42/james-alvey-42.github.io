@@ -2,7 +2,7 @@
 
 I am a PhD student in Theoretical Particle Physics and Comsology at King's College London. Broadly I am interested in how to model the early Universe and use data from Cosmology to constrain new physics. I'm also interested in how to use simple data techniques to answer people based research questions.
 
-![me](assets/img/james-alvey.jpg)
+![me](assets/img/james-alvey.jpg | width=40)
 
 For a portfolio of my work, please visit [james-alvey-42.github.io](https://james-alvey-42.github.io).
 
