@@ -50,3 +50,5 @@ In addition to this, there is some content related to programming tips and techn
 * **Monte Carlo Markov Chains (MCMC)** - A link to a post about this with some code examples can be found [here](https://james-alvey-42.github.io/mcmc/) with the source code in [this](https://github.com/james-alvey-42/ProgramTools/tree/master/MCMC) repository.
 * **Unit Testing** - For a very basic example of how to write unit tests, see [here](https://github.com/james-alvey-42/ProgramTools/tree/master/Testing).
 * **Sphinx Documentation** - This is a base template for how to use sphinx to document your project, the code is [here](https://github.com/james-alvey-42/ProgramTools/tree/master/Sphinx).
+* **Flask** - Again, can be used as a template for how to build and deploy a Flask server application with very basic user setup. The code is [here](https://github.com/james-alvey-42/ProgramTools/tree/master/Flask).
+* **Python Style Files** - A tutorial on how to write and save your own default style file in Matplotlib is given [here](https://james-alvey-42.github.io/stylefiles/).
