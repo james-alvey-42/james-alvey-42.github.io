@@ -1,0 +1,63 @@
+I"�<blockquote>
+  <p>Direct detection experiments relying on nuclear recoil signatures lose sensitivity to sub-GeV dark matter for typical galactic velocities. This sensitivity is recovered if there exists another source of flux with higher momenta. Such an energetic flux of light dark matter could originate from the decay of mesons produced in inelastic cosmic ray collisions. We compute this novel production mechanism - a cosmic beam dump experiment - and estimate the resulting limits from XENON1T and LZ. We find that the dark matter flux from inelastic cosmic rays colliding with atmospheric nuclei can dominate over the flux from elastic collisions with relic dark matter.</p>
+</blockquote>
+
+<p>This post is based on an article written in May 2019 with colleagues at King’s College London and the University of Cambridge. Links to the webpages and PDF documents can be found below. Also included is a link to a presentation given by myself at the recent BUSSTEPP Summer School at the University of Glasgow.</p>
+
+<h3 id="light-dark-matter-from-inelastic-cosmic-ray-collisions-j-alvey-m-campos-m-fairbairn-t-you">Light Dark Matter from Inelastic Cosmic Ray Collisions, <em>J. Alvey, M. Campos, M. Fairbairn, T. You</em></h3>
+
+<p><em>Summary:</em> There is a common issue with all direct detection experiments in that they lose sensitivity to light dark matter due to small nuclear recoils. We estimated the impact that inelastic collisions of cosmic rays in the atmosphere, producing light dark matter from meson decays, could have on the direct detection parameter space.</p>
+
+<ul>
+  <li>
+    <p><a href="https://arxiv.org/pdf/1905.05776.pdf" target="blank_"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF</a></p>
+  </li>
+  <li>
+    <p><a href="http://inspirehep.net/record/1735134" target="blank_"><i class="fa fa-external-link" aria-hidden="true"></i> Inspire-HEP Record</a></p>
+  </li>
+  <li>
+    <p><a href="/assets/pdf/beam-dump.pdf" target="blank_"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> BUSSTEPP Presentation</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.kcl.ac.uk/news/changing-the-way-we-search-for-dark-matter" target="blank_"><i class="fa fa-rss" aria-hidden="true"></i> KCL News Appearance</a></p>
+  </li>
+</ul>
+
+<h2 id="direct-detection">Direct Detection</h2>
+
+<p>There are a couple of ways we might think about trying to deduce the existence of (particle) dark matter. This is well illustrated by the following diagram;</p>
+
+<p><img src="/assets/img/detection.png" alt="detection" /></p>
+
+<p>We can view this in a couple of ways:</p>
+
+<ol>
+  <li><strong>Top to Bottom</strong> - Indirect Detection e.g. X-ray background, annihilation of DM into standard model particles</li>
+  <li><strong>Bottom to Top</strong> - Production e.g. proton-proton collisions at the LHC leading to msising energy etc.</li>
+  <li><strong>Left to Right</strong> - Direct Detection e.g. nuclear recoils</li>
+</ol>
+
+<p>It is of course the latter case we are interested in here. To “directly detect” dark matter, we generically look for recoils of nuclei in elastic collisions with DM particles. To see why this is an issue for light dark matter, consider the following analogy. Imagine that the nucleus is a bowling ball of sorts. Then heavy dark matter will be of similar bowling ball type. When a collision occurs between these two objects, the nucleus will move a significant amount. On the other hand, light dark matter is akin to a golf ball being thrown at the bowling ball. In this case, the golf ball will simply rebound and it will be difficult to see the bowling ball move.</p>
+
+<p>This also helps us understand how boosting the momentum of the light dark matter can overcome this sensitivity issue. If we throw the golf ball hard enough, then despite its low mass, we may still be able to see the bowling ball recoil. This is the intuition for our novel production mechanism in the boosted decay of mesons in the atmosphere.</p>
+
+<h2 id="traditional-beam-dump-experiments">Traditional Beam Dump Experiments</h2>
+
+<p>In traditional beam dump experiments such as MiniBooNe (located at Fermilab, IL) a high energy proton beam from some accelerator is directed at a dense fixed target. This leads to a significant number of collisions and is potentially an efficient production mechanism for dark matter particles. If a detector is placed downstream of this production point then there is the potential to overcome the light dark matter issue discussed above since any that is produced will be highly boosted.</p>
+
+<p><img src="/assets/img/miniboone.png" alt="miniboone" /></p>
+
+<h2 id="the-atmosphere-as-a-beam-dump">The Atmosphere as a Beam Dump</h2>
+
+<p>To understand how the atmosphere can act as a beam dump, we make some analogies between the different aspects described above.</p>
+
+<ol>
+  <li><strong>Proton Beam</strong> - This is replaced by the flux of cosmic rays coming from both galactic and extra-galactic sources.</li>
+  <li><strong>Fixed Target</strong> - Instead of the steel target in MiniBooNe, the nitrogen molecules in the atmosphere act as a fixed target for the cosmic rays.</li>
+  <li><strong>Detector</strong> - Direct detection benefits from a large detector size, and due to the atmospheric nature, we can utitlise any Earth based detector such as Xenon-1T to act as the endpoint of the beam dump. This is in contrast to the dedicated detector that needs to be present at MiniBooNe.</li>
+</ol>
+
+<p><img src="/assets/img/boosteddm.png" alt="boosteddm" /></p>
+
+<p><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Homepage</a></p>
+:ET
