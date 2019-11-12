@@ -65,10 +65,12 @@ plt.style.use('ja')
 
 ## Default Styling
 
-As a final, slightly more complicated point, we can also make this the default style so that the second line above is not needed. To do this, add the following line to the file `/anaconda3/lib/site-packages/matplotlib/pyplot .py`,
+As a final, slightly more complicated point, we can also make this the default style so that the second line above is not needed. To do this, add the following line to the file:
+
+`/anaconda3/lib/site-packages/matplotlib/pyplot.py`,
 
 {%highlight python%}
-matplotlib.style.use('ja')
+matplotlib.style.use('ja') # Add this line
 {%endhighlight%}
 
 again, replacing the name as necessary.
