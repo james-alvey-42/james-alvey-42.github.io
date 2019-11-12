@@ -48,3 +48,5 @@ In addition to this, there is some content related to programming tips and techn
 
 * **Free Speed in Python** - The notebook can be found in [this repository](https://github.com/james-alvey-42/ProgramTools/tree/master/PythonLessons) and the accompanying talk [here](https://james-alvey-42.github.io/assets/pdf/free-speed.pdf). This is part of a series of lectures at King's College London (see [KCL Physics](https://github.com/KCLPhysics/CarpentryOctober2019) for more).
 * **Monte Carlo Markov Chains (MCMC)** - A link to a post about this with some code examples can be found [here](https://james-alvey-42.github.io/mcmc/) with the source code in [this](https://github.com/james-alvey-42/ProgramTools/tree/master/MCMC) repository.
+* **Unit Testing** - For a very basic example of how to write unit tests, see [here](https://github.com/james-alvey-42/ProgramTools/tree/master/Testing).
+* **Sphinx Documentation** - This is a base template for how to use sphinx to document your project, the code is [here](https://github.com/james-alvey-42/ProgramTools/tree/master/Sphinx).
