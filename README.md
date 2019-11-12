@@ -47,3 +47,4 @@ There is also a repository with the various [talks](https://github.com/james-alv
 In addition to this, there is some content related to programming tips and techniques, code examples, and other projects. A non-exhaustive list is given below.
 
 * **Free Speed in Python** - The notebook can be found in [this repository](https://github.com/james-alvey-42/ProgramTools/tree/master/PythonLessons) and the accompanying talk [here](https://james-alvey-42.github.io/assets/pdf/free-speed.pdf). This is part of a series of lectures at King's College London (see [KCL Physics](https://github.com/KCLPhysics/CarpentryOctober2019) for more).
+* **Monte Carlo Markov Chains (MCMC)** - A link to a post about this with some code examples can be found [here](https://james-alvey-42.github.io/mcmc/) with the source code in [this](https://github.com/james-alvey-42/ProgramTools/tree/master/MCMC) repository.
