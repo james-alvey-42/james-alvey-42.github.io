@@ -1,4 +1,4 @@
-I"É<p>We can learn a lot of interesting physics from the Cosmic Microwave Background (CMB) using classical statistical techniques and state-of-the-art data from the Planck collaboration. The question we look to answer here is what data format is the most robust to non-standard methods such as Machine Learning techniques.</p>
+I"<p>We can learn a lot of interesting physics from the Cosmic Microwave Background (CMB) using classical statistical techniques and state-of-the-art data from the Planck collaboration. The question we look to answer here is what data format is the most robust to non-standard methods such as Machine Learning techniques.</p>
 
 <h3 id="research-question">Research Question</h3>
 
@@ -23,4 +23,6 @@
     <p><strong>[A3]</strong> Finally, we will look at encoding the CMB as a graph (in the mathematical sense) with the power spectrum encoded in the edges. We expect this will be the most robust to any deletions and reorderings.</p>
   </li>
 </ul>
+
+<p><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Homepage</a></p>
 :ET

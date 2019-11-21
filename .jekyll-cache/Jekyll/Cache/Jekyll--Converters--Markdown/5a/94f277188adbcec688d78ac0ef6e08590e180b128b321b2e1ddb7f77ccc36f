@@ -1,4 +1,4 @@
-I"êY<blockquote>
+I"ﬂY<blockquote>
   <p>This is a classic reinforcement learning problem where the goal is to maximise the reward in a set of actions from a discrete choice of options. We present some of the theory and a simple example to test two different strategies.</p>
 </blockquote>
 
@@ -126,4 +126,6 @@
 <p>If we take a look at the results, we see that strategies with non-zero <script type="math/tex">\epsilon</script> work significantly better than there purely greedy strategy. We can also understand why this is the case: the greedy strategy doesn‚Äôt bother discovering lever 7, whilst the ones that do explore find it at various points and then take advantage thereafter. Indeed we see that <script type="math/tex">\epsilon = 0.01</script> takes longer to find the lever, but as soon as it does it catches up with <script type="math/tex">\epsilon = 0.1</script> realtively quickly once it does.</p>
 
 <p>This is of course a brief interlude into this problem, but it illustrates the key ideas and provides a simple implementation. A more thorough analysis might take into account a suite of simulations for different distributions of means and variances for the machines to see which strategy is globally the best.</p>
+
+<p><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Homepage</a></p>
 :ET

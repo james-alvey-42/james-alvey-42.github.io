@@ -43,7 +43,7 @@
   --post-title-color: var(--sunset);
   --post-hover-color: var(--evening);
   --main-font-color: #ffffff;
-  --code-color: var(--evening);
+  --code-color: #2e2e2e;
   --link-color: var(--sunset);
   --icon-hover-color: var(--cloud);
   --selection-font-color: var(--sunset);
@@ -63,6 +63,7 @@ html {
 
 pre {
     tab-size: 2;
+    border-radius: 10px;
 }
 
 a {

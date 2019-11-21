@@ -142,3 +142,5 @@ With some plotting we find the following results:
 If we take a look at the results, we see that strategies with non-zero $$\epsilon$$ work significantly better than there purely greedy strategy. We can also understand why this is the case: the greedy strategy doesn't bother discovering lever 7, whilst the ones that do explore find it at various points and then take advantage thereafter. Indeed we see that $$\epsilon = 0.01$$ takes longer to find the lever, but as soon as it does it catches up with $$\epsilon = 0.1$$ realtively quickly once it does. 
 
 This is of course a brief interlude into this problem, but it illustrates the key ideas and provides a simple implementation. A more thorough analysis might take into account a suite of simulations for different distributions of means and variances for the machines to see which strategy is globally the best.
+
+<a href="{{site.baseurl}}/"><i class="fa fa-home" aria-hidden="true"></i> Homepage</a>
