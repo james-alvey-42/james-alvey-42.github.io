@@ -34,11 +34,12 @@ Now, there are a number of very sophisticated methods to solve this truly optima
 
 To put this more formally so we can write some code around it, we define a parameter $$\epsilon$$ so that with probability $$(1 - \epsilon)$$ we choose the action with the highest value $$A_t = \mathrm{argmax} Q_t(a)$$ and with probability $$\epsilon$$ we randomly choose another machine. The Greedy Method case is then where $$\epsilon = 0$$.
 
-## Implementation
+Implementation
+---
 
 To actually implement the scheme and compare the two different methods, we start by defining a `Machine` class which will output the rewards when it is "pulled".
 
-```python
+{%highlight python%}
 class Machine():
 	
 	def __init__(self, mean, sigma, label):
@@ -48,11 +49,11 @@ class Machine():
 
 	def sample(self):
 		return np.random.normal(loc=self.mean, scale=self.sigma, size=1)[0]
-```
+{%endhighlight%}
 
-We also create an `Agent` class that has a given $$\epislon$$ parameter and number of trials.
+We also create an `Agent` class that has a given $$\epsilon$$ parameter and number of trials.
 
-```python
+{%highlight python%}
 class Agent():
 	
 	def __init__(self, epsilon, Nsteps, Nmachines, label=None):
@@ -93,11 +94,12 @@ class Agent():
 
 	def get_numbers(self):
 		return self.numbers
-```
+{%endhighlight%}
 
 Finally, for a given agent and set of machines, we can run a full simulation of the trials with the following function:
 
-```python
+{%highlight python%}
+
 def run_simulation(agent, Nsteps, machines):
 	for i in range(Nsteps - 1):
 		Qold = agent.Q[:, i]
@@ -108,11 +110,13 @@ def run_simulation(agent, Nsteps, machines):
 	for i in range(1, len(agent.rewards)):
 		averages.append(np.sum(agent.rewards[:i])*(1/i))
 	agent.averages = averages
-```
+
+{%endhighlight%}
 
 The end of this function computes the rolling averages of the total reward gained whcih can then be plotted. To implement these and trial a few strategies, we just need:
 
-```python
+{%highlight python%}
+
 Nmachines = 10
 means = np.random.uniform(-1, 1, Nmachines)
 sigma = np.random.uniform(0, 1, Nmachines)
@@ -126,7 +130,8 @@ agent3 = Agent(epsilon=0.0, Nsteps=Nsteps, Nmachines=Nmachines, label='0.0')
 run_simulation(agent1, Nsteps=Nsteps, machines=machines)
 run_simulation(agent2, Nsteps=Nsteps, machines=machines)
 run_simulation(agent3, Nsteps=Nsteps, machines=machines)
-```
+
+{%endhighlight%}
 
 With some plotting we find the following results:
 

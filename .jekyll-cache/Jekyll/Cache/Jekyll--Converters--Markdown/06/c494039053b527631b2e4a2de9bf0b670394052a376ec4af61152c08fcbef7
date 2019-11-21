@@ -1,4 +1,4 @@
-I"�Y<blockquote>
+I"~Y<blockquote>
   <p>This is a classic reinforcement learning problem where the goal is to maximise the reward in a set of actions from a discrete choice of options. We present some of the theory and a simple example to test two different strategies.</p>
 </blockquote>
 
@@ -35,7 +35,7 @@
 
 <p>To actually implement the scheme and compare the two different methods, we start by defining a <code class="highlighter-rouge">Machine</code> class which will output the rewards when it is “pulled”.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Machine</span><span class="p">():</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Machine</span><span class="p">():</span>
 	
 	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="n">mean</span>
@@ -43,12 +43,11 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
 
 	<span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</code></pre></div></div>
+		<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></code></pre></figure>
 
-<p>We also create an <code class="highlighter-rouge">Agent</code> class that has a given <script type="math/tex">\epislon</script> parameter and number of trials.</p>
+<p>We also create an <code class="highlighter-rouge">Agent</code> class that has a given <script type="math/tex">\epsilon</script> parameter and number of trials.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Agent</span><span class="p">():</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Agent</span><span class="p">():</span>
 	
 	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">Nsteps</span><span class="p">,</span> <span class="n">Nmachines</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="n">epsilon</span>
@@ -87,12 +86,11 @@
 		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">averages</span>
 
 	<span class="k">def</span> <span class="nf">get_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">numbers</span>
-</code></pre></div></div>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">numbers</span></code></pre></figure>
 
 <p>Finally, for a given agent and set of machines, we can run a full simulation of the trials with the following function:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">Nsteps</span><span class="p">,</span> <span class="n">machines</span><span class="p">):</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">run_simulation</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">Nsteps</span><span class="p">,</span> <span class="n">machines</span><span class="p">):</span>
 	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nsteps</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
 		<span class="n">Qold</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">Q</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
 		<span class="n">Qnew</span><span class="p">,</span> <span class="n">reward</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Qold</span><span class="p">,</span> <span class="n">machines</span><span class="p">)</span>
@@ -101,12 +99,11 @@
 	<span class="n">averages</span> <span class="o">=</span> <span class="p">[]</span>
 	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">rewards</span><span class="p">)):</span>
 		<span class="n">averages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">rewards</span><span class="p">[:</span><span class="n">i</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">i</span><span class="p">))</span>
-	<span class="n">agent</span><span class="o">.</span><span class="n">averages</span> <span class="o">=</span> <span class="n">averages</span>
-</code></pre></div></div>
+	<span class="n">agent</span><span class="o">.</span><span class="n">averages</span> <span class="o">=</span> <span class="n">averages</span></code></pre></figure>
 
 <p>The end of this function computes the rolling averages of the total reward gained whcih can then be plotted. To implement these and trial a few strategies, we just need:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Nmachines</span> <span class="o">=</span> <span class="mi">10</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">Nmachines</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Nmachines</span><span class="p">)</span>
 <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Nmachines</span><span class="p">)</span>
 <span class="n">machines</span> <span class="o">=</span> <span class="p">[</span><span class="n">Machine</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">means</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nmachines</span><span class="p">)]</span>
@@ -118,8 +115,7 @@
 
 <span class="n">run_simulation</span><span class="p">(</span><span class="n">agent1</span><span class="p">,</span> <span class="n">Nsteps</span><span class="o">=</span><span class="n">Nsteps</span><span class="p">,</span> <span class="n">machines</span><span class="o">=</span><span class="n">machines</span><span class="p">)</span>
 <span class="n">run_simulation</span><span class="p">(</span><span class="n">agent2</span><span class="p">,</span> <span class="n">Nsteps</span><span class="o">=</span><span class="n">Nsteps</span><span class="p">,</span> <span class="n">machines</span><span class="o">=</span><span class="n">machines</span><span class="p">)</span>
-<span class="n">run_simulation</span><span class="p">(</span><span class="n">agent3</span><span class="p">,</span> <span class="n">Nsteps</span><span class="o">=</span><span class="n">Nsteps</span><span class="p">,</span> <span class="n">machines</span><span class="o">=</span><span class="n">machines</span><span class="p">)</span>
-</code></pre></div></div>
+<span class="n">run_simulation</span><span class="p">(</span><span class="n">agent3</span><span class="p">,</span> <span class="n">Nsteps</span><span class="o">=</span><span class="n">Nsteps</span><span class="p">,</span> <span class="n">machines</span><span class="o">=</span><span class="n">machines</span><span class="p">)</span></code></pre></figure>
 
 <p>With some plotting we find the following results:</p>
 

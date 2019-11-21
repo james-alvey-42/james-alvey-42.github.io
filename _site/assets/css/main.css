@@ -61,6 +61,10 @@ html {
   /* 2 */
 }
 
+pre {
+    tab-size: 2;
+}
+
 a {
   text-decoration: none;
 }
