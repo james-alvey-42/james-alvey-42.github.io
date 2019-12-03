@@ -1,4 +1,4 @@
-I"ßY<blockquote>
+I"E¢<blockquote>
   <p>This is a classic reinforcement learning problem where the goal is to maximise the reward in a set of actions from a discrete choice of options. We present some of the theory and a simple example to test two different strategies.</p>
 </blockquote>
 
@@ -121,11 +121,110 @@
 
 <p><img src="/assets/img/multi-armed-bandit-full.png" alt="fullresults" /></p>
 
-<h2 id="conclusions">Conclusions</h2>
+<h2 id="conclusions-epsilon-greedy-policies">Conclusions: <script type="math/tex">\epsilon</script>-greedy policies</h2>
 
 <p>If we take a look at the results, we see that strategies with non-zero <script type="math/tex">\epsilon</script> work significantly better than there purely greedy strategy. We can also understand why this is the case: the greedy strategy doesnâ€™t bother discovering lever 7, whilst the ones that do explore find it at various points and then take advantage thereafter. Indeed we see that <script type="math/tex">\epsilon = 0.01</script> takes longer to find the lever, but as soon as it does it catches up with <script type="math/tex">\epsilon = 0.1</script> realtively quickly once it does.</p>
 
 <p>This is of course a brief interlude into this problem, but it illustrates the key ideas and provides a simple implementation. A more thorough analysis might take into account a suite of simulations for different distributions of means and variances for the machines to see which strategy is globally the best.</p>
+
+<h2 id="gradient-bandits">Gradient Bandits</h2>
+
+<p>Suppose instead of estimating the <em>actual</em> value of an action <script type="math/tex">a</script> at some time <script type="math/tex">t</script> (<script type="math/tex">Q_t(a)</script>), we now consider learning a <em>preference</em> <script type="math/tex">H_t(a)</script>. For some set of preferences, we can then choose an action based on the probability distribution:</p>
+
+<script type="math/tex; mode=display">\pi_t(a) = \mathbb{P}(A_t = a) = \frac{\exp[H_t(a)]}{\sum_{b}{\exp[H_t(b)]}}</script>
+
+<p>This has the advantage that it removes an initial bias on the expected value of a reward. If we initially give a flat prior to all of the machines, then we can update our preferences according to,</p>
+
+<script type="math/tex; mode=display">H_{t + 1}(A_t) = H_t(A_t) + \alpha (R_t - \bar{R}_t) (1 - \pi_t(A_t)</script>
+
+<script type="math/tex; mode=display">H_{t + 1}(a) = H_t(a) - \alpha (R_t - \bar{R}_t) \pi_t(a) \quad \forall a \neq A_t</script>
+
+<p>where <script type="math/tex">R_t</script> is the reward received at timestep <script type="math/tex">t</script>, <script type="math/tex">\bar{R}_t</script> is the average reward received over all times previous to <script type="math/tex">t</script>, <script type="math/tex">A_t</script> is the action taken at time <script type="math/tex">t</script>, and <script type="math/tex">\alpha</script> is a parameter than controls the step size. At this point, these definitions look a little arbitrary. It is nice that we have the notion of a probability distribution, but why should we update it in the way given above? The derivation is in <a href="https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf">Sutton and Barto</a>, but the key points are the following:</p>
+
+<ul>
+  <li>
+    <p>The update preserves the total preference i.e. <script type="math/tex">\sum_{a}{H_t(a)} = \mathrm{const.}</script>. In other words, the preferences just get reshared out from one timestep to the next. To show this, you need the fact that the probabilities add to unity.</p>
+  </li>
+  <li>
+    <p>It can be shown that the update above is the sampling equivalent to maximising the expected reward <script type="math/tex">\mathbb{E}(R_t)</script> over the probability distribution <script type="math/tex">\pi</script>. If you believe me that this is indeed the case, then the above is equivalent to;</p>
+  </li>
+</ul>
+
+<script type="math/tex; mode=display">H_{t + 1}(a) = H_t(a) + \alpha \frac{\partial \mathbb{E}(R_t)}{\partial H_t(a)}</script>
+
+<p>which is just a very simple form of gradient ascent.</p>
+
+<h2 id="implementation-1">Implementation</h2>
+
+<p>To implement the above we define a new class <code class="highlighter-rouge">ProbabilityAgent</code>;</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">ProbabilityAgent</span><span class="p">():</span>
+	
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Nsteps</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">Nmachines</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">Nsteps</span> <span class="o">=</span> <span class="n">Nsteps</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">Nmachines</span><span class="p">,</span> <span class="n">Nsteps</span><span class="p">))</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">probabilities</span>  <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">Nmachines</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">Nmachines</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">rewards</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Nsteps</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">numbers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Nmachines</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">pulls</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">averages</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Nsteps</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">get_reward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">machine</span><span class="p">):</span>
+		<span class="k">return</span> <span class="n">machine</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+
+	<span class="k">def</span> <span class="nf">pull</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">machines</span><span class="p">):</span>
+		<span class="n">machine</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">machines</span><span class="p">))],</span> 
+									<span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+									<span class="n">p</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">probabilities</span><span class="p">))</span>
+		<span class="k">return</span> <span class="n">machines</span><span class="p">[</span><span class="n">machine</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+	<span class="k">def</span> <span class="nf">first_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">machines</span><span class="p">):</span>
+		<span class="n">pulled_machine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pull</span><span class="p">(</span><span class="n">machines</span><span class="p">)</span>
+		<span class="n">reward</span> <span class="o">=</span> <span class="n">pulled_machine</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">numbers</span><span class="p">[</span><span class="n">pulled_machine</span><span class="o">.</span><span class="n">label</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">rewards</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pulls</span><span class="p">]</span> <span class="o">=</span> <span class="n">reward</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">averages</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">reward</span>
+		<span class="n">machine_index</span> <span class="o">=</span> <span class="n">pulled_machine</span><span class="o">.</span><span class="n">label</span>
+		<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">machines</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s">'bool'</span><span class="p">)</span>
+		<span class="n">mask</span><span class="p">[</span><span class="n">machine_index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="n">H</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+		<span class="n">H</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span><span class="n">reward</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">averages</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">probabilities</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+		<span class="n">H</span><span class="p">[</span><span class="n">machine_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="n">machine_index</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span><span class="n">reward</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">averages</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">probabilities</span><span class="p">[</span><span class="n">machine_index</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">H</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">probabilities</span> <span class="o">=</span> <span class="n">calculate_probabilities</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">pulls</span> <span class="o">+=</span> <span class="mi">1</span>
+
+	<span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">machines</span><span class="p">):</span>
+		<span class="n">pulled_machine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pull</span><span class="p">(</span><span class="n">machines</span><span class="p">)</span>
+		<span class="n">reward</span> <span class="o">=</span> <span class="n">pulled_machine</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">numbers</span><span class="p">[</span><span class="n">pulled_machine</span><span class="o">.</span><span class="n">label</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">rewards</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pulls</span><span class="p">]</span> <span class="o">=</span> <span class="n">reward</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">averages</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pulls</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">reward</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pulls</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">averages</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pulls</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pulls</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+		<span class="n">machine_index</span> <span class="o">=</span> <span class="n">pulled_machine</span><span class="o">.</span><span class="n">label</span>
+		<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">machines</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s">'bool'</span><span class="p">)</span>
+		<span class="n">mask</span><span class="p">[</span><span class="n">machine_index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="n">H</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pulls</span><span class="p">]</span>
+		<span class="n">H</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span><span class="n">reward</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">averages</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pulls</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">probabilities</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+		<span class="n">H</span><span class="p">[</span><span class="n">machine_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="n">machine_index</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span><span class="n">reward</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">averages</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pulls</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">probabilities</span><span class="p">[</span><span class="n">machine_index</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pulls</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">H</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">probabilities</span> <span class="o">=</span> <span class="n">calculate_probabilities</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">pulls</span> <span class="o">+=</span> <span class="mi">1</span>
+
+	<span class="k">def</span> <span class="nf">get_averages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">averages</span>
+
+	<span class="k">def</span> <span class="nf">get_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">numbers</span></code></pre></figure>
+
+<p>Running the simulations in the same case as the <script type="math/tex">\epsilon</script>-greedy bandit, we find the following results;</p>
+
+<p><img src="/assets/img/multi-armed-bandit-h.png" alt="h-results" /></p>
+
+<h2 id="conclusions-gradient-bandit">Conclusions: Gradient Bandit</h2>
+
+<p>We see from the results that the convergence is quite sensitive to <script type="math/tex">\alpha</script>. Furthemore, we see that we indeed find a better strategy compared to the <script type="math/tex">\epsilon</script>-greedy case, with a higher average reward. One thing that we did not test here is whether this secondary method performs better with different initialisations of the preferences compared to varying the initial action value priors. One would expect as such, since the action priors can be biased if the order of magnitude expected for the reward is not known.</p>
 
 <p><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Homepage</a></p>
 :ET
